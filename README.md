@@ -4,14 +4,17 @@ This repository contains three small Java server implementations that illustrate
 - `SingleThreaded/` — handles connections serially on the main thread.
 - `Multithreaded/` — spawns a new thread for every accepted connection.
 - `ThreadPool/` — uses a fixed-size thread pool to limit concurrent workers.
-Purpose
+
+## Purpose
 
 - Teach concurrency trade-offs (latency vs. throughput vs. resource usage).
 - Provide runnable code and diagrams to reason about behavior under load.
-Prerequisites
+
+## Prerequisites
 
 - Java JDK 8 or newer installed and available on `PATH`.
-Quick run (example)
+
+## Quick run (example)
 
 ```
 cd SingleThreaded
@@ -21,21 +24,23 @@ java Server    # starts server on configured port (default 8080)
 # In another terminal
 java Client    # sends a simple request to the server
 ```
+
 Repeat for `Multithreaded` and `ThreadPool`.
 
-Connection handling overview
+## Connection handling overview
 
 ```mermaid
 flowchart LR
-  Client --> LB[OS accept()]
-  LB --> ST[SingleThreaded Server]
-  LB --> MT[Multithreaded Server]
-  LB --> TP[ThreadPool Server]
+  Client --> LB["OS accept()"]
+  LB --> ST["SingleThreaded Server"]
+  LB --> MT["Multithreaded Server"]
+  LB --> TP["ThreadPool Server"]
   ST -->|handle on main thread| Handler1((handler))
   MT -->|spawn worker thread| MTW((per-connection worker))
   TP -->|submit task| Pool((fixed thread pool))
 ```
-Sequence (request lifetime)
+
+## Sequence (request lifetime)
 
 ```mermaid
 sequenceDiagram
@@ -49,17 +54,19 @@ sequenceDiagram
     Server-->>Client: send response
     Client-->>Server: close
 ```
-Where to look
+
+## Where to look
 
 - `SingleThreaded/Server.java` — simple loop with `accept()` + handle
 - `Multithreaded/Server.java` — `new Thread` per connection
 - `ThreadPool/Server.java` — uses `Executors.newFixedThreadPool`
 
-Next steps
+## Next steps
 
 - See the per-directory READMEs for architecture, sequence diagrams, tuning tips, and sample workloads.
 
 If you'd like, I can also add a simple benchmark script and example workload to compare latency and throughput across the three implementations.
+
 # Multithreaded Web Server Project
 
 This project demonstrates three types of Java web servers:
