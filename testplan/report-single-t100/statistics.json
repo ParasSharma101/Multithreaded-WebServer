@@ -1,0 +1,34 @@
+{
+  "TCP Request" : {
+    "transaction" : "TCP Request",
+    "sampleCount" : 100,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 32.71999999999999,
+    "medianResTime" : 5.0,
+    "minResTime" : 1.0,
+    "maxResTime" : 198.0,
+    "pct1ResTime" : 99.0,
+    "pct2ResTime" : 107.74999999999994,
+    "pct3ResTime" : 198.0,
+    "throughput" : 52.68703898840885,
+    "receivedKBytesPerSec" : 1.4406612223393045,
+    "sentKBytesPerSec" : 0.0
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 100,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 32.71999999999999,
+    "medianResTime" : 5.0,
+    "minResTime" : 1.0,
+    "maxResTime" : 198.0,
+    "pct1ResTime" : 99.0,
+    "pct2ResTime" : 107.74999999999994,
+    "pct3ResTime" : 198.0,
+    "throughput" : 52.68703898840885,
+    "receivedKBytesPerSec" : 1.4406612223393045,
+    "sentKBytesPerSec" : 0.0
+  }
+}

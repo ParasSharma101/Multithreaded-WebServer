@@ -1,0 +1,55 @@
+# Place this file at the ROOT of your Multithreaded-WebServer repo
+# (same level as the SingleThreaded/, MultiThreaded/, ThreadPool/ folders)
+#
+# Run all three servers at once:
+#   docker-compose up --build
+#
+# Run just one (e.g. for a single benchmark run):
+#   docker-compose up --build single-threaded
+
+services:
+
+  single-threaded:
+    build: ./SingleThreaded
+    container_name: single-threaded
+    ports:
+      - "8081:8010"      # host:container -- adjust 8010 if your actual port differs
+    cpus: "1.0"
+    mem_limit: 512m
+
+  multi-threaded:
+    build: ./Multithreaded
+    container_name: multi-threaded
+    ports:
+      - "8082:8010"
+    cpus: "1.0"
+    mem_limit: 512m
+
+  thread-pool:
+    build: ./ThreadPool
+    container_name: thread-pool
+    ports:
+      - "8083:8010"
+    cpus: "1.0"
+    mem_limit: 512m
+
+  # JMeter runner -- only needed once you're ready to run the actual load test.
+  # Runs on the same Docker network as the servers, so it reaches them by
+  # SERVICE NAME on the CONTAINER port (8010), not the host-mapped ports above.
+  # This works the same way on Windows/Mac/Linux (host networking does not).
+  #
+  # Example -- target the single-threaded server, passing host/port as JMeter vars:
+  #   docker-compose run --rm jmeter -n -t /test/plan.jmx \
+  #     -Jtarget_host=single-threaded -Jtarget_port=8010 \
+  #     -l /test/results-single.jtl -e -o /test/report-single
+  jmeter:
+    image: jmeter
+    container_name: jmeter-runner
+    volumes:
+      - ./testplan:/test
+    cpus: "1.0"
+    mem_limit: 512m
+    depends_on:
+      - single-threaded
+      - multi-threaded
+      - thread-pool
